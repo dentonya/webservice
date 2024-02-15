@@ -39,7 +39,14 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'allauth',
+    'africastalking',
+    'allauth.account',
+    'allauth.socialaccount',
+    'allauth.socialaccount.providers.google',
     'rest_framework',
+    'social_django',
+    'oidc_auth',
     'corsheaders',
     'orders',
     'customers'
@@ -76,6 +83,20 @@ TEMPLATES = [
 WSGI_APPLICATION = 'webservice.wsgi.application'
 
 
+AUTHENTICATION_BACKENDS = (
+    # ...
+    'allauth.account.auth_backends.AuthenticationBackend',
+    'social_core.backends.google.GoogleOAuth2',  # or other OIDC provider
+    'oidc_auth.backends.OpenIDConnectBackend',
+    # ...
+)
+
+SITE_ID = 1  # Set your site ID
+
+ACCOUNT_EMAIL_VERIFICATION = 'none'
+SOCIALACCOUNT_QUERY_EMAIL = True
+LOGIN_REDIRECT_URL = '/'
+
 # Database
 # https://docs.djangoproject.com/en/5.0/ref/settings/#databases
 
@@ -98,13 +119,10 @@ DATABASES = {
 #   }
 
 REST_FRAMEWORK = {
-    'DEFAULT_PERMISSION_CLASSES': (
-        'rest_framework.permissions.IsAuthenticated',
-    ),
     'DEFAULT_AUTHENTICATION_CLASSES': (
-        # ...
-        'oidc_auth.authentication.JSONWebTokenAuthentication',
-        'oidc_auth.authentication.BearerTokenAuthentication',
+        'oidc_auth.authentication.OIDCAuthentication',
+        'rest_framework.authentication.SessionAuthentication',
+        'rest_framework.authentication.TokenAuthentication',
     ),
 }
 
