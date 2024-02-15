@@ -39,14 +39,8 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'allauth',
     'africastalking',
-    'allauth.account',
-    'allauth.socialaccount',
-    'allauth.socialaccount.providers.google',
     'rest_framework',
-    'social_django',
-    'oidc_auth',
     'corsheaders',
     'orders',
     'customers'
@@ -83,19 +77,19 @@ TEMPLATES = [
 WSGI_APPLICATION = 'webservice.wsgi.application'
 
 
-AUTHENTICATION_BACKENDS = (
-    # ...
-    'allauth.account.auth_backends.AuthenticationBackend',
-    'social_core.backends.google.GoogleOAuth2',  # or other OIDC provider
-    'oidc_auth.backends.OpenIDConnectBackend',
-    # ...
-)
+# AUTHENTICATION_BACKENDS = (
+#     # ...
+#     'allauth.account.auth_backends.AuthenticationBackend',
+#     'social_core.backends.google.GoogleOAuth2',  # or other OIDC provider
+#     'oidc_auth.backends.OpenIDConnectBackend',
+#     # ...
+# )
 
-SITE_ID = 1  # Set your site ID
+# SITE_ID = 1  # Set your site ID
 
-ACCOUNT_EMAIL_VERIFICATION = 'none'
-SOCIALACCOUNT_QUERY_EMAIL = True
-LOGIN_REDIRECT_URL = '/'
+# ACCOUNT_EMAIL_VERIFICATION = 'none'
+# SOCIALACCOUNT_QUERY_EMAIL = True
+# LOGIN_REDIRECT_URL = '/'
 
 # Database
 # https://docs.djangoproject.com/en/5.0/ref/settings/#databases
@@ -120,58 +114,61 @@ DATABASES = {
 
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': (
-        'oidc_auth.authentication.OIDCAuthentication',
         'rest_framework.authentication.SessionAuthentication',
         'rest_framework.authentication.TokenAuthentication',
     ),
 }
 
-OIDC_AUTH = {
-    # Specify OpenID Connect endpoint. Configuration will be
-    # automatically done based on the discovery document found
-    # at <endpoint>/.well-known/openid-configuration
-    'OIDC_ENDPOINT': 'https://accounts.google.com',
 
-    # The Claims Options can now be defined by a static string.
-    # ref: https://docs.authlib.org/en/latest/jose/jwt.html#jwt-payload-claims-validation
-    # The old OIDC_AUDIENCES option is removed in favor of this new option.
-    # `aud` is only required, when you set it as an essential claim.
-    'OIDC_CLAIMS_OPTIONS': {
-        'aud': {
-            'values': ['myapp'],
-            'essential': True,
-        }
-    },
-    
-    # (Optional) Function that resolves id_token into user.
-    # This function receives a request and an id_token dict and expects to
-    # return a User object. The default implementation tries to find the user
-    # based on username (natural key) taken from the 'sub'-claim of the
-    # id_token.
-    'OIDC_RESOLVE_USER_FUNCTION': 'oidc_auth.authentication.get_user_by_id',
-    
-    # (Optional) Number of seconds in the past valid tokens can be 
-    # issued (default 600)
-    'OIDC_LEEWAY': 600,
-    
-    # (Optional) Time before signing keys will be refreshed (default 24 hrs)
-    'OIDC_JWKS_EXPIRATION_TIME': 24*60*60,
+AFRICASTKNG_USERNAME = os.getenv('USER_NAME')
+AFRICASTKNG_API_KEY = os.getenv('API_KEY')
 
-    # (Optional) Time before bearer token validity is verified again (default 10 minutes)
-    'OIDC_BEARER_TOKEN_EXPIRATION_TIME': 10*60,
-    
-    # (Optional) Token prefix in JWT authorization header (default 'JWT')
-    'JWT_AUTH_HEADER_PREFIX': 'JWT',
-    
-    # (Optional) Token prefix in Bearer authorization header (default 'Bearer')
-    'BEARER_AUTH_HEADER_PREFIX': 'Bearer',
+# OIDC_AUTH = {
+#     # Specify OpenID Connect endpoint. Configuration will be
+#     # automatically done based on the discovery document found
+#     # at <endpoint>/.well-known/openid-configuration
+#     'OIDC_ENDPOINT': 'https://accounts.google.com',
 
-    # (Optional) Which Django cache to use
-    'OIDC_CACHE_NAME': 'default',
+#     # The Claims Options can now be defined by a static string.
+#     # ref: https://docs.authlib.org/en/latest/jose/jwt.html#jwt-payload-claims-validation
+#     # The old OIDC_AUDIENCES option is removed in favor of this new option.
+#     # `aud` is only required, when you set it as an essential claim.
+#     'OIDC_CLAIMS_OPTIONS': {
+#         'aud': {
+#             'values': ['myapp'],
+#             'essential': True,
+#         }
+#     },
+    
+#     # (Optional) Function that resolves id_token into user.
+#     # This function receives a request and an id_token dict and expects to
+#     # return a User object. The default implementation tries to find the user
+#     # based on username (natural key) taken from the 'sub'-claim of the
+#     # id_token.
+#     'OIDC_RESOLVE_USER_FUNCTION': 'oidc_auth.authentication.get_user_by_id',
+    
+#     # (Optional) Number of seconds in the past valid tokens can be 
+#     # issued (default 600)
+#     'OIDC_LEEWAY': 600,
+    
+#     # (Optional) Time before signing keys will be refreshed (default 24 hrs)
+#     'OIDC_JWKS_EXPIRATION_TIME': 24*60*60,
 
-    # (Optional) A cache key prefix when storing and retrieving cached values
-    'OIDC_CACHE_PREFIX': 'oidc_auth.',
-}
+#     # (Optional) Time before bearer token validity is verified again (default 10 minutes)
+#     'OIDC_BEARER_TOKEN_EXPIRATION_TIME': 10*60,
+    
+#     # (Optional) Token prefix in JWT authorization header (default 'JWT')
+#     'JWT_AUTH_HEADER_PREFIX': 'JWT',
+    
+#     # (Optional) Token prefix in Bearer authorization header (default 'Bearer')
+#     'BEARER_AUTH_HEADER_PREFIX': 'Bearer',
+
+#     # (Optional) Which Django cache to use
+#     'OIDC_CACHE_NAME': 'default',
+
+#     # (Optional) A cache key prefix when storing and retrieving cached values
+#     'OIDC_CACHE_PREFIX': 'oidc_auth.',
+# }
 # Password validation
 # https://docs.djangoproject.com/en/5.0/ref/settings/#auth-password-validators
 
