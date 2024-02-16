@@ -21,6 +21,8 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('api/',include('orders.urls')),
     path('api/',include('customers.urls')),
+    path('auth/', include('social_django.urls', namespace='social')),
+    path('o/', include('oauth2_provider.urls', namespace='oauth2_provider')),
 
 
 ]
