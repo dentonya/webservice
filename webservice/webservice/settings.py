@@ -40,10 +40,12 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'africastalking',
+    'rest_framework',
+    # OAuth
     'oauth2_provider',
     'social_django',
-    'rest_framework',
     'corsheaders',
+    'oidc_provider',
     'orders',
     'customers'
 ]
@@ -63,7 +65,8 @@ ROOT_URLCONF = 'webservice.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [
+            BASE_DIR / 'templates'],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -77,6 +80,7 @@ TEMPLATES = [
 ]
 
 WSGI_APPLICATION = 'webservice.wsgi.application'
+
 
 
 # Database
@@ -100,28 +104,41 @@ DATABASES = {
 #       }
 #   }
 
-AUTHENTICATION_BACKENDS = (
-    'social_core.backends.open_id_connect.OpenIdConnectAuth',
-    'oauth2_provider.backends.OAuth2Backend',
-    'django.contrib.auth.backends.ModelBackend',
-)
+# OAUTH2_PROVIDER = {
+#     'SCOPES': {'read': 'Read scope', 'write': 'Write scope', 'groups': 'Access to your groups'}
+# }
 
-SOCIAL_AUTH_OPENID_CONNECT_KEY = os.getenv('OPENID_CONNECT_KEY')
-SOCIAL_AUTH_OPENID_CONNECT_SECRET = os.getenv('OPENID_CONNECT_SECRET')
-SOCIAL_AUTH_OPENID_CONNECT_SCOPE = ['openid', 'email', 'profile']
-SOCIAL_AUTH_OPENID_CONNECT_EXTRA_SCOPE = []
-
-LOGIN_URL = 'login'
-LOGIN_REDIRECT_URL = 'https://www.orderniyangu.com'
-
+OAUTH2_PROVIDER = {
+    "OIDC_ENABLED": True,
+    "OIDC_RSA_PRIVATE_KEY": os.getenv("OIDC_RSA_PRIVATE_KEY"),
+    "SCOPES": {
+        "openid": "OpenID Connect scope",
+        # ... any other scopes that you use
+    },
+    # ... any other settings you want
+}
+LOGIN_URL = '/admin/'
 
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': (
-        'rest_framework.authentication.SessionAuthentication',
         'oauth2_provider.contrib.rest_framework.OAuth2Authentication',
-        'rest_framework.authentication.TokenAuthentication',
+        'customers.authetication.OktaTokenAuthentication'
+    ),
+
+    'DEFAULT_PERMISSION_CLASSES': (
+        'rest_framework.permissions.IsAuthenticated',
     ),
 }
+
+OKTA_DOMAIN =  os.getenv('OKTA_DOMAIN')
+OIDC_RP_CLIENT_ID = os.getenv('OKTA_CLIENTID')
+OIDC_RP_CLIENT_SECRET = os.getenv('OKTA_CLIENTSECRET')
+OIDC_RP_SIGN_ALGO = "RS256"
+OIDC_OP_AUTHORIZATION_ENDPOINT = f"https://{OKTA_DOMAIN}/oauth2/default/v1/authorize" # The OIDC authorization endpoint
+OIDC_RP_TOKEN_ENDPOINT = f"https://{OKTA_DOMAIN}/oauth2/default/v1/token" # The OIDC token endpoint
+OIDC_OP_USER_ENDPOINT = f"https://{OKTA_DOMAIN}/oauth2/default/v1/userinfo" # The OIDC userinfo endpoint
+OIDC_OP_TOKEN_ENDPOINT = f"https://{OKTA_DOMAIN}/oauth2/default/v1/token" # The OIDC token endpoint
+OIDC_OP_JWKS_ENDPOINT = f"https://{OKTA_DOMAIN}/oauth2/default/v1/keys" # The OIDC JWKS endpoint
 
 
 AFRICASTKNG_USERNAME = os.getenv('USER_NAME')

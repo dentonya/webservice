@@ -16,6 +16,7 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path,include
+from .views import login,callback,home
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -23,6 +24,10 @@ urlpatterns = [
     path('api/',include('customers.urls')),
     path('auth/', include('social_django.urls', namespace='social')),
     path('o/', include('oauth2_provider.urls', namespace='oauth2_provider')),
+    path('openid/', include('oidc_provider.urls', namespace='oidc_provider')),
+    path('openid/login/', login, name='login'),
+    path('home/',home,name='home'),
+    path('api/authorization/callback', callback, name='callback'),
 
 
 ]
