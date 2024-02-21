@@ -86,33 +86,31 @@ WSGI_APPLICATION = 'webservice.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/5.0/ref/settings/#databases
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
-    }
-}
-
 # DATABASES = {
-#       'default': {
-#           'ENGINE': 'django.db.backends.postgresql',
-#           'NAME':  os.getenv('DB_NAME'),
-#           'USER': os.getenv('DB_USER'),
-#           'PASSWORD': os.getenv('DB_PASSWORD'),
-#           'HOST': os.getenv('DB_HOST'),
-#           'PORT': os.getenv('DB_PORT'),
-#       }
-#   }
-
-# OAUTH2_PROVIDER = {
-#     'SCOPES': {'read': 'Read scope', 'write': 'Write scope', 'groups': 'Access to your groups'}
+#     'default': {
+#         'ENGINE': 'django.db.backends.sqlite3',
+#         'NAME': BASE_DIR / 'db.sqlite3',
+#     }
 # }
+
+DATABASES = {
+      'default': {
+          'ENGINE': 'django.db.backends.postgresql',
+          'NAME':  os.getenv('DB_NAME'),
+          'USER': os.getenv('DB_USER'),
+          'PASSWORD': os.getenv('DB_PASSWORD'),
+          'HOST': os.getenv('DB_HOST'),
+          'PORT': os.getenv('DB_PORT'),
+      }
+  }
+
 
 OAUTH2_PROVIDER = {
     "OIDC_ENABLED": True,
     "OIDC_RSA_PRIVATE_KEY": os.getenv("OIDC_RSA_PRIVATE_KEY"),
     "SCOPES": {
         "openid": "OpenID Connect scope",
+        "read": 'Read scope', 'write': 'Write scope', 'groups': 'Access to your groups',
         # ... any other scopes that you use
     },
     # ... any other settings you want
@@ -122,7 +120,6 @@ LOGIN_URL = '/admin/'
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': (
         'oauth2_provider.contrib.rest_framework.OAuth2Authentication',
-        'customers.authetication.OktaTokenAuthentication'
     ),
 
     'DEFAULT_PERMISSION_CLASSES': (

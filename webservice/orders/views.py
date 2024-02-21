@@ -1,5 +1,6 @@
 from rest_framework import viewsets,permissions
 from rest_framework.response import Response
+from rest_framework.permissions import AllowAny
 from .models import Orders
 from .serializers import OrderSerializer
 import africastalking
@@ -12,7 +13,8 @@ api_key =settings.AFRICASTKNG_API_KEY
 africastalking.initialize(username=user_name,api_key=api_key)
 
 class OrderViewSet(viewsets.ModelViewSet):
-    permission_classes = [permissions.IsAuthenticated]
+    # permission_classes = [permissions.IsAuthenticated]
+    permission_classes = [AllowAny]
     queryset = Orders.objects.all()
     serializer_class = OrderSerializer
 
