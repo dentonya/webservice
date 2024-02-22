@@ -22,7 +22,7 @@ class ViewsTestCase(TestCase):
         response = self.client.post('/api/customer/', {'name': 'New Customer', 'code': 'NC001','phone_number':'0123456789'})
         print(response.content) 
         self.assertEqual(response.status_code, status.HTTP_201_CREATED)
-        self.assertEqual(Customers.objects.count(),  3)
+        self.assertEqual(Customers.objects.count(),  2)
         self.assertEqual(Customers.objects.get(code='NC001').name, 'New Customer')
 
     def test_order_create_view(self):

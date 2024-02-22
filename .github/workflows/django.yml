@@ -28,10 +28,12 @@ jobs:
         run: |
           export DJANGO_SETTINGS_MODULE=webservice.settings
       - name: Run Tests
-        run: |
-          pip install coverage
-          coverage run -m pytest
-          coverage report -m
+          run: |
+            cd webservice  # Change to the project directory
+            pip install coverage
+            coverage run -m pytest
+            coverage report -m
+        
 
 # Heavily modified deploy job to fit render.com
   deploy:
