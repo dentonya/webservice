@@ -13,8 +13,8 @@ api_key =settings.AFRICASTKNG_API_KEY
 africastalking.initialize(username=user_name,api_key=api_key)
 
 class OrderViewSet(viewsets.ModelViewSet):
-    # permission_classes = [permissions.IsAuthenticated]
-    permission_classes = [AllowAny]
+    permission_classes = [permissions.IsAuthenticated]
+    # permission_classes = [AllowAny]
     queryset = Orders.objects.all()
     serializer_class = OrderSerializer
 
