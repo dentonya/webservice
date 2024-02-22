@@ -15,12 +15,13 @@ class ViewsTestCase(TestCase):
         self.client = APIClient()
         self.customer = Customers.objects.create(name='Test Customer', code='TC001',phone_number='0123456789')
         self.order = Orders.objects.create(customer=self.customer, item='Test Item', amount=1)
+          # Include OAuth2 authentication headers
         self.client.credentials(HTTP_AUTHORIZATION='Bearer YOUR_ACCESS_TOKEN')
 
     def tearDown(self):
         Customers.objects.all().delete()
         
-         # Include OAuth2 authentication headers
+       
 
     def test_customer_create_view(self):
         response = self.client.post('/api/customer/', {'name': 'New Customer', 'code': 'NC001','phone_number':'0123456789'})
