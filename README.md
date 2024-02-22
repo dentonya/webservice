@@ -110,7 +110,7 @@ Ensure you have account on [Africa's Talking Portal](https://africastalking.com/
 Launch the simulator and connect with phone number used when adding a Customer, for testing purposes.
 When order is made using order api endpoint provided above the sample message below should be send to the simulator.
 
-![Simulator SMS](https://res.cloudinary.com/df1cznaft/image/upload/v1708638868/Screenshot_from_2024-02-22_17-58-46_a0rwct.png)
+![Simulator SMS](https://res.cloudinary.com/df1cznaft/image/upload/v1708641435/Screenshot_from_2024-02-23_01-34-09_lcsyca.png)
 
 ## Deployed Version on Render
 I have deployed web service on [Render.com](https://dashboard.render.com/) connected with Postgres database from Render.
