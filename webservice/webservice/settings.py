@@ -94,28 +94,27 @@ WSGI_APPLICATION = 'webservice.wsgi.application'
 #     }
 # }
 
-DATABASES = {
-      'default': {
-          'ENGINE': 'django.db.backends.postgresql',
-          'NAME':  os.getenv('DB_NAME'),
-          'USER': os.getenv('DB_USER'),
-          'PASSWORD': os.getenv('DB_PASSWORD'),
-          'HOST': os.getenv('DB_HOST'),
-          'PORT': os.getenv('DB_PORT'),
-      }
-  }
-
 # DATABASES = {
-#       'default': 
-#           dj_database_url.parse(os.getenv('DATABASE_URL'))
+#       'default': {
+#           'ENGINE': 'django.db.backends.postgresql',
+#           'NAME':  os.getenv('DB_NAME'),
+#           'USER': os.getenv('DB_USER'),
+#           'PASSWORD': os.getenv('DB_PASSWORD'),
+#           'HOST': os.getenv('DB_HOST'),
+#           'PORT': os.getenv('DB_PORT'),
+#       }
+#   }
 
-# }
+DATABASES = {
+      'default': 
+          dj_database_url.parse(os.getenv('DATABASE_URL'))
+
+}
 
 
 
 OAUTH2_PROVIDER = {
     "OIDC_ENABLED": True,
-    "OIDC_RSA_PRIVATE_KEY": os.getenv("OIDC_RSA_PRIVATE_KEY"),
     "SCOPES": {
         "openid": "OpenID Connect scope",
         "read": 'Read scope', 'write': 'Write scope', 'groups': 'Access to your groups',
